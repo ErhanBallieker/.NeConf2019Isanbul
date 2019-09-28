@@ -1,0 +1,19 @@
+﻿@page "/grpc"
+
+<h1>Grpc Service Call</h1>
+
+<p>@user</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Call Grpc Service</button>
+
+@code {
+    string user;
+
+    public async Task IncrementCount()
+    {
+        var channel = GrpcChannel.ForAddress("https://localhost:5001");
+        var client = new Greeter.GreeterClient(channel);
+        var reply = await client.SayHelloAsync(new HelloRequest { Name = "Erhan", Lastname = "Ballıeker" });
+        user = reply.Message;
+    }
+}
